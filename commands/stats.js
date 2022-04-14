@@ -74,11 +74,7 @@ async execute(interaction) {
         embed.addField("Discord", mention(dname) ?? "No Account Linked!", true);
         embed.setTitle(title.rawText.replace("Stats", "").trim());
         embed.setThumbnail("https://stats.gats.io" + img);
-        embed.setFooter(
-          `${title.rawText.replace("Stats", "").trim()}'s favorite perk is ${
-            favArr[2]
-          }, and their favorite gun is the ${favArr[0]}.`
-        );
+        embed.setFooter({ text: `${title.rawText.replace("Stats", "").trim()}'s favorite perk is ${favArr[2]}, and their favorite gun is the ${favArr[0]}.` });
         embed.setColor("RANDOM");
         interaction.reply({ embeds: [embed] });
       } else return interaction.reply("That player does not exist.");
