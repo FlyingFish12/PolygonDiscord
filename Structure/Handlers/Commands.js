@@ -1,9 +1,7 @@
 const { Perms } = require('../Validation/Permissions');
+const { GuildID } = require("../../config.json");
 const { Client } = require("discord.js");
 const Ascii = require("ascii-table")
-const { promisify } = require('util');
-const { glob } = require('glob');
-const PG = promisify(glob);
 
 /**
  * @param {Client} client 
