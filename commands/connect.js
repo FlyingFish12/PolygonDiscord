@@ -45,8 +45,12 @@ async execute(interaction) {
             }
             if (result) {
               return interaction.reply(
-                "This account has already been claimed by someone. It may be you. If you think this is a mistake, please ask a moderator for assistance."
-              );
+                { 
+                  content: 
+                  "This account has already been claimed by someone. It may be you. If you think this is a mistake, please ask a moderator for assistance.", 
+                  ephemeral:
+                  true
+              });
             } else {
               redis.hset("accounts", username, interaction.user.id);
               return interaction.reply("Account linked successfully!");

@@ -28,7 +28,7 @@ module.exports = {
                 {name: "Discord Member Since", value: `<t:${parseInt(target.user.createdTimestamp / 1000)}:R>`, inline: true},
                 {name: "Roles", value: `${target.roles.cache.map(r => r).sort((first, second) => second.position - first.position).join(` | `)}`, inline: false},
             )
-            .setFooter(`ID - ${target.user.id}`);
+            .setFooter({ text : `ID - ${target.user.id}` });
             
             
         interaction.reply({embeds: [response]})

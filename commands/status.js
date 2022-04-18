@@ -14,7 +14,7 @@ module.exports = {
       .setColor(`#454ade`)
       .setTitle(`Feesh Bot's Info`)
       .setThumbnail(client.user.displayAvatarURL({dynamic: true}))
-      .setDescription(`Invite: [Invite me here!](https://discord.com/api/oauth2/authorize?client_id=735918313921708053&permissions=1515523009648&scope=bot%20applications.commands)\nUptime: <t:${parseInt(client.readyTimestamp / 1000)}:R>`)
+      .setDescription(`Invite: [Invite me here!](https://discord.com/api/oauth2/authorize?client_id=954126704874516540&permissions=1515523009648&scope=bot%20applications.commands)\nUptime: <t:${parseInt(client.readyTimestamp / 1000)}:R>`)
       .addFields(
         { name: `Bot Owner`, value: `\`\`\`Fefe#9196\`\`\``, inline: true },
         {
@@ -30,7 +30,7 @@ module.exports = {
       .addField("API Latency", `\`\`\`${(client.ws.ping)}ms\`\`\``, true)
       .addField("Mem Usage", `\`\`\`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB\`\`\``, true)
       .setTimestamp()
-      .setFooter(`ID:895001466450903050`);
+      .setFooter({ text: `ID:895001466450903050`});
 
         interaction.reply({embeds: [Response]})
     }

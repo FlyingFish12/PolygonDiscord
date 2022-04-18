@@ -23,7 +23,7 @@ module.exports = {
             {name: "Nitro Stats:", value: `\`\`\`⊢ Tier: ${guild.premiumTier.replace("TIER_", "").replace("NONE", "no tier")}\n⊢ Boosts: ${guild.premiumSubscriptionCount}\n⊢ Boosters: ${members.cache.filter((m) => m.premiumSince).size}\`\`\``, inline: false}
         )
         .setTimestamp()
-        .setFooter("Guild ID - " + guild.id);
+        .setFooter({ text : "Guild ID - " + guild.id });
 
 
         interaction.reply({embeds: [embed1]})

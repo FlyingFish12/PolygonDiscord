@@ -43,7 +43,7 @@ module.exports = {
                     value: chosenQuestion.choices.join(`\n`)
                 })      
                 .setTimestamp()
-                .setFooter(`5 seconds to answer!`)
+                .setFooter({ text : `5 seconds to answer!` })
 
             interaction.reply({embeds: [TriviaEmbed] }, { fetchReply: true })
         

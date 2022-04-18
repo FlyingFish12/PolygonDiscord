@@ -5,12 +5,12 @@ const { parse } = require("node-html-parser");
 const Redis = require("ioredis");
 
 module.exports = {
-    name: "stats",
-    description: "Get's stats for you.",
+    name: "clan-stats",
+    description: "Get's a clans stats for you.",
     options: [
         {
-            name: "username",
-            description: "The username to get stats for.",
+            name: "clan-name",
+            description: "The name of the clan to get stats for.",
             type: "STRING",
             required: true
         }
@@ -29,17 +29,12 @@ async execute(interaction) {
     let favArr;
     let img;
     let dname;
-    let mention = (id) => {
-      if (id == null) {
-        return null;
-      } else return `<@${id}>`;
-    };
-    if (!interaction.options.getString("username")) {
-      return interaction.reply("provide a username.");
+    if (!interaction.options.getString("clan-name")) {
+      return interaction.reply("provide a clan name.");
     }
-    if (interaction.options.getString("username")) {
+    if (interaction.options.getString("clan-name")) {
       const request = await req(
-        `https://stats.gats.io/${interaction.options.getString("username")}`
+        `https://stats.gats.io/clan/${interaction.options.getString("clan-name")}`
       ).text();
       const root = parse(request);
       table = root.querySelector("tbody");
@@ -48,7 +43,7 @@ async execute(interaction) {
       if (title) {
         dname = await redis.hget(
           "accounts",
-          title.rawText.replace("Stats", "").trim()
+          title.rawText.replace("Clan Summary", "").trim()
         );
       }
       if (favTable) {
@@ -71,14 +66,13 @@ async execute(interaction) {
           }));
 
         embed.addFields(arr);
-        embed.addField("Discord", mention(dname) ?? "No Account Linked!", true);
-        embed.setTitle(title.rawText.replace("Stats", "").trim());
-        embed.setURL(`https://stats.gats.io/${interaction.options.getString("username")}`);
+        embed.setTitle(title.rawText.replace("Clan Summary", "").trim());
+        embed	.setURL(`https://stats.gats.io/clan/${interaction.options.getString("clan-name")}`);
         embed.setThumbnail("https://stats.gats.io" + img);
-        embed.setFooter({ text: `${title.rawText.replace("Stats", "").trim()}'s favorite perk is ${favArr[2]}, and their favorite gun is the ${favArr[0]}.` });
+        embed.setFooter({ text: `${title.rawText.replace("Clan Summary", "").trim()}'s favorite perk is ${favArr[2]}, and their favorite gun is the ${favArr[0]}.` });
         embed.setColor("RANDOM");
         interaction.reply({ embeds: [embed] });
-      } else return interaction.reply("That player does not exist.");
+      } else return interaction.reply("That clan does not exist.");
     }
   },
 };
