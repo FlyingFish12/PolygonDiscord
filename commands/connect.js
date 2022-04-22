@@ -1,25 +1,19 @@
 require("dotenv").config();
+const { SlashCommandBuilder } = require("@discordjs/builders");
 const req = require("petitio");
 const { parse } = require("node-html-parser");
 const Redis = require("ioredis");
-
 module.exports = {
-    name: "connect",
-    description: "Connect your Gats account to your Discord account.",
-    options: [
-        {
-            name: "username",
-            description: "The Gats account you want to connect to.",
-            type: "STRING",
-            required: true
-        }
-    ],
-    /**
-     * 
-     * @param {Interaction} interaction 
-     */
-async execute(interaction) {
-
+  data: new SlashCommandBuilder()
+    .setName("connect")
+    .setDescription("Connect your Discord account to your Gats account.")
+    .addStringOption((option) =>
+      option
+        .setName("username")
+        .setDescription("The Gats account you want to connect to.")
+        .setRequired(true)
+    ),
+  async execute(interaction) {
     const redis = new Redis(process.env.REDIS);
     let table;
     let errString =
@@ -45,12 +39,8 @@ async execute(interaction) {
             }
             if (result) {
               return interaction.reply(
-                { 
-                  content: 
-                  "This account has already been claimed by someone. It may be you. If you think this is a mistake, please ask a moderator for assistance.", 
-                  ephemeral:
-                  true
-              });
+                "This account has already been claimed by someone. It may be you. If you think this is a mistake, please ask a moderator for assistance."
+              );
             } else {
               redis.hset("accounts", username, interaction.user.id);
               return interaction.reply("Account linked successfully!");

@@ -1,26 +1,20 @@
 require("dotenv").config();
+const { SlashCommandBuilder } = require("@discordjs/builders");
 const req = require("petitio");
 const { MessageEmbed } = require("discord.js");
 const { parse } = require("node-html-parser");
 const Redis = require("ioredis");
-
 module.exports = {
-    name: "stats",
-    description: "Get's stats for you.",
-    options: [
-        {
-            name: "username",
-            description: "The username to get stats for.",
-            type: "STRING",
-            required: true
-        }
-    ],
-    /**
-     * 
-     * @param {Interaction} interaction 
-     */
-async execute(interaction) {
-
+  data: new SlashCommandBuilder()
+    .setName("stats")
+    .setDescription("Get player stats!")
+    .addStringOption((option) =>
+      option
+        .setName("username")
+        .setDescription("The username to get stats for.")
+        .setRequired(true)
+    ),
+  async execute(interaction) {
     const redis = new Redis(process.env.REDIS);
     let embed = new MessageEmbed();
     let table;
@@ -73,9 +67,12 @@ async execute(interaction) {
         embed.addFields(arr);
         embed.addField("Discord", mention(dname) ?? "No Account Linked!", true);
         embed.setTitle(title.rawText.replace("Stats", "").trim());
-        embed.setURL(`https://stats.gats.io/${interaction.options.getString("username")}`);
         embed.setThumbnail("https://stats.gats.io" + img);
-        embed.setFooter({ text: `${title.rawText.replace("Stats", "").trim()}'s favorite perk is ${favArr[2]}, and their favorite gun is the ${favArr[0]}.` });
+        embed.setFooter(
+          `${title.rawText.replace("Stats", "").trim()}'s favorite perk is ${
+            favArr[2]
+          }, and their favorite gun is the ${favArr[0]}.`
+        );
         embed.setColor("RANDOM");
         interaction.reply({ embeds: [embed] });
       } else return interaction.reply("That player does not exist.");

@@ -1,31 +1,49 @@
-const { Client, Collection } = require('discord.js');
-const { Token } = require("./config.json");
-const client = new Client({intents: 32511});
+const { Client, Intents, Collection } = require("discord.js");
+const fs = require("fs");
+require("dotenv").config();
+const { token } = require('./config.json')
 
-const { promisify } = require("util");
-const { glob } = require("glob");
-const PG = promisify(glob);
-const Ascii = require("ascii-table");
+
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
+
+client.once("ready", () => {
+  console.log("Online!");
+  const activities_list = [
+    "You Play Gats",
+    "API's Gather stats",
+	"People On Discord",
+  ];
+  setInterval(() => {
+    const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
+    client.user.setActivity(activities_list[index]);
+    type: "WATCHING";
+  }, 5000);
+});
 
 client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-const { DisTube } = require("distube");
-const { SpotifyPlugin } = require("@distube/spotify");
-const ready = require('./Events/Client/ready');
-
-client.distube = new DisTube(client, {
-    emitNewSongOnly: true,
-    leaveOnFinish: true,
-    emitAddSongWhenCreatingQueue: false,
-    plugins: [new SpotifyPlugin()]
-})
-module.exports = client;
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.data.name, command);
+}
 
 
-require("./Structure/Systems/GiveawaySys")(client);
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
 
-require("./Structure/Handlers/Events")(client, PG, Ascii);
-require("./Structure/Handlers/Commands")(client, PG, Ascii);
+	const command = client.commands.get(interaction.commandName);
+
+	if (!command) return;
+
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
+});
 
 
-client.login(Token)
+client.login(token);
