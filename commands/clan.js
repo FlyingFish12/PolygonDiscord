@@ -1,25 +1,21 @@
 require("dotenv").config();
+const { SlashCommandBuilder } = require("@discordjs/builders");
 const req = require("petitio");
 const { MessageEmbed } = require("discord.js");
 const { parse } = require("node-html-parser");
 const Redis = require("ioredis");
 
 module.exports = {
-    name: "clan-stats",
-    description: "Get's a clans stats for you.",
-    options: [
-        {
-            name: "clan-name",
-            description: "The name of the clan to get stats for.",
-            type: "STRING",
-            required: true
-        }
-    ],
-    /**
-     * 
-     * @param {Interaction} interaction 
-     */
-async execute(interaction) {
+  data: new SlashCommandBuilder()
+    .setName("clan-stats")
+    .setDescription("Connect your Discord account to your Gats account.")
+    .addStringOption((option) =>
+      option
+        .setName("clan-name")
+        .setDescription("The clan to get stats for.")
+        .setRequired(true)
+    ),
+  async execute(interaction) {
 
     const redis = new Redis(process.env.REDIS);
     let embed = new MessageEmbed();
@@ -67,9 +63,9 @@ async execute(interaction) {
 
         embed.addFields(arr);
         embed.setTitle(title.rawText.replace("Clan Summary", "").trim());
-        embed	.setURL(`https://stats.gats.io/clan/${interaction.options.getString("clan-name")}`);
+        embed.setURL(`https://stats.gats.io/clan/${interaction.options.getString("clan-name")}`);
         embed.setThumbnail("https://stats.gats.io" + img);
-        embed.setFooter({ text: `${title.rawText.replace("Clan Summary", "").trim()}'s favorite perk is ${favArr[2]}, and their favorite gun is the ${favArr[0]}.` });
+        embed.setFooter(`${title.rawText.replace("Clan Summary", "").trim()}'s favorite perk is ${favArr[2]}, and their favorite gun is the ${favArr[0]}.`);
         embed.setColor("RANDOM");
         interaction.reply({ embeds: [embed] });
       } else return interaction.reply("That clan does not exist.");

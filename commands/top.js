@@ -1,24 +1,20 @@
 require("dotenv").config();
+const { SlashCommandBuilder } = require("@discordjs/builders");
 const req = require("petitio");
 const { MessageEmbed } = require("discord.js");
 const { parse } = require("node-html-parser");
 
 module.exports = {
-    name: "top-gun",
-    description: "Get's the gun leaderboard stats for you.",
-    options: [
-        {
-            name: "gun-name",
-            description: "The leaderboard for the chosen gun. (pistol, smg, shotgun, assault, sniper, lmg)",
-            type: "STRING",
-            required: true
-        }
-    ],
-    /**
-     * 
-     * @param {Interaction} interaction 
-     */
-async execute(interaction) {
+  data: new SlashCommandBuilder()
+    .setName("top")
+    .setDescription("Gets Gats leaderboards.")
+    .addStringOption((option) =>
+      option
+        .setName("gun-name")
+        .setDescription("The leaderboard you want to get.")
+        .setRequired(true)
+    ),
+  async execute(interaction) {
 
     let embed = new MessageEmbed();
     let table;
