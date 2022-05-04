@@ -10,9 +10,9 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.once("ready", () => {
   console.log("Online!");
   const activities_list = [
-    "You Play Gats",
-    "API's Gather stats",
-	"People On Discord",
+    "Gats with the homies",
+    "With stats APIs",
+	"With people On Discord",
   ];
   setInterval(() => {
     const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
