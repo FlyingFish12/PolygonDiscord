@@ -41,7 +41,7 @@ module.exports = {
           }, [])
           .map((p) => ({
             name: p[0],
-            value: p[1] + p[2],
+            value: p[1],
             inline: false,
           }));
 

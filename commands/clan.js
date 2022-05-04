@@ -17,7 +17,6 @@ module.exports = {
     ),
   async execute(interaction) {
 
-    const redis = new Redis(process.env.REDIS);
     let embed = new MessageEmbed();
     let table;
     let title;
@@ -25,6 +24,7 @@ module.exports = {
     let favArr;
     let img;
     let dname;
+    let rank;
     if (!interaction.options.getString("clan-name")) {
       return interaction.reply("provide a clan name.");
     }
@@ -36,36 +36,34 @@ module.exports = {
       table = root.querySelector("tbody");
       title = root.querySelector("div .col-xs-12 h1");
       favTable = root.querySelector("div.table-responsive tbody");
+      
       if (title) {
-        dname = await redis.hget(
-          "accounts",
           title.rawText.replace("Clan Summary", "").trim()
-        );
       }
       if (favTable) {
         img = root.querySelector("td img").getAttribute("src");
         favArr = favTable.structuredText.split("\n").map((str) => str.trim());
       }
+
       if (table) {
         let arr = table.structuredText
           .split("\n")
           .map((str) => str.trim())
-          .reduce(function (accumulator, currentValue, currentIndex, array) {
-            if (currentIndex % 2 === 0)
-              accumulator.push(array.slice(currentIndex, currentIndex + 2));
-            return accumulator;
-          }, [])
-          .map((p) => ({
-            name: p[0],
-            value: p[1],
-            inline: true,
-          }));
 
-        embed.addFields(arr);
+        embed.setDescription(`${arr[0]} - ${arr[1]}\n${arr[2]} - ${arr[3]}\n${arr[4]} - ${arr[5]}\n${arr[6]} - ${arr[7]}\n${arr[8]} - ${arr[9]}\n${arr[10]} - ${arr[11]}\n${arr[12]} - ${arr[13]}\n${arr[14]} - ${arr[15]}\n${arr[16]} - ${arr[17]}\n${arr[18]} - ${arr[19]}\n${arr[20]} - ${arr[21]}`)
+        embed.addFields(
+          { 
+            name: "Clan's Favourite Loadout",
+            value: 
+            `Favorite gun is the ${favArr[0]} with ${favArr[1]} kills\n` + 
+            `Favorite perk is ${favArr[2]} (used ${favArr[3]} times).\n` +
+            `Favorite ability is ${favArr[4]} (used ${favArr[5]} times).`,
+            inline: false
+          },
+        );
         embed.setTitle(title.rawText.replace("Clan Summary", "").trim());
         embed.setURL(`https://stats.gats.io/clan/${interaction.options.getString("clan-name")}`);
         embed.setThumbnail("https://stats.gats.io" + img);
-        embed.setFooter(`${title.rawText.replace("Clan Summary", "").trim()}'s favorite perk is ${favArr[2]}, and their favorite gun is the ${favArr[0]}.`);
         embed.setColor("RANDOM");
         interaction.reply({ embeds: [embed] });
       } else return interaction.reply("That clan does not exist.");

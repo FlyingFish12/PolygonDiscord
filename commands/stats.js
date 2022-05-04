@@ -23,6 +23,7 @@ module.exports = {
     let favArr;
     let img;
     let dname;
+    let rank;
     let mention = (id) => {
       if (id == null) {
         return null;
@@ -38,6 +39,7 @@ module.exports = {
       const root = parse(request);
       table = root.querySelector("tbody");
       title = root.querySelector("div .col-xs-12 h1");
+      rank = root.querySelector("div .col-xs-12 h3");
       favTable = root.querySelector("div.table-responsive tbody");
       if (title) {
         dname = await redis.hget(
@@ -49,26 +51,46 @@ module.exports = {
         img = root.querySelector("td img").getAttribute("src");
         favArr = favTable.structuredText.split("\n").map((str) => str.trim());
       }
+      let clanname = root.querySelector("h2").childNodes[1]
+      if (!clanname) {
+        clanname = 'No clan'
+      } else {
+        nearlyclanname = root.querySelector("h2").childNodes[1].rawText.replace(/\n+/g, '')
+        clanname = `[${nearlyclanname}](https://stats.gats.io/clan/${nearlyclanname})`
+      }
       if (table) {
         let arr = table.structuredText
           .split("\n")
           .map((str) => str.trim())
-          .reduce(function (accumulator, currentValue, currentIndex, array) {
-            if (currentIndex % 2 === 0)
-              accumulator.push(array.slice(currentIndex, currentIndex + 2));
-            return accumulator;
-          }, [])
-          .map((p) => ({
-            name: p[0],
-            value: p[1],
-            inline: true,
-          }));
 
-        embed.addFields(arr);
-        embed.addField("Discord", mention(dname) ?? "No Account Linked!", true);
-        embed.setTitle(title.rawText.replace("Stats", "").trim());
+        embed.setDescription(`${arr[0]} - ${arr[1]}\n${arr[2]} - ${arr[3]}\n${arr[4]} - ${arr[5]}\n${arr[6]} - ${arr[7]}\n${arr[8]} - ${arr[9]}\n${arr[10]} - ${arr[11]}\n${arr[12]} - ${arr[13]}\n${arr[14]} - ${arr[15]}\n${arr[16]} - ${arr[17]}\n${arr[18]} - ${arr[19]}\n${arr[20]} - ${arr[21]}`)
+        embed.addFields(
+          { 
+            name: "Favourite Loadout",
+            value: 
+            `Favorite gun is the ${favArr[0]} with ${favArr[1]} kills\n` + 
+            `Favorite perk is ${favArr[2]} (used ${favArr[3]} times).\n` +
+            `Favorite ability is ${favArr[4]} (used ${favArr[5]} times).`,
+            inline: false
+          },
+          { 
+            name: `Clan member`,
+            value: `${clanname}`,
+            inline: true
+          },
+          {
+            name: `Gats Rank`,
+            value: `${rank.rawText}`,
+            inline: true
+          },
+          {
+            name: `Connected account`,
+            value: `${mention(dname) ?? "No account linked"}`,
+            inline: true
+          }
+        );
+        embed.setTitle(`${title.rawText.replace("Stats", "").trim()}`);
         embed.setThumbnail("https://stats.gats.io" + img);
-        embed.setFooter(`${title.rawText.replace("Stats", "").trim()}'s favorite perk is ${favArr[2]}, and their favorite gun is the ${favArr[0]}.`);
         embed.setColor("RANDOM");
         interaction.reply({ embeds: [embed] });
       } else return interaction.reply("That player does not exist.");
