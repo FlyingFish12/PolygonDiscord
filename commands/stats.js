@@ -63,14 +63,7 @@ module.exports = {
           .split("\n")
           .map((str) => str.trim())
 
-          const description = () => {
-            let elems = []
-            for (let i=0; i < arr.length; i+=2) elems.push(`${arr[i]} - ${arr[i+1]}`)
-          
-            return elems
-          }
-
-        embed.setDescription(description)
+        embed.setDescription(`${arr[0]} - ${arr[1]}\n${arr[2]} - ${arr[3]}\n${arr[4]} - ${arr[5]}\n${arr[6]} - ${arr[7]}\n${arr[8]} - ${arr[9]}\n${arr[10]} - ${arr[11]}\n${arr[12]} - ${arr[13]}\n${arr[14]} - ${arr[15]}\n${arr[16]} - ${arr[17]}\n${arr[18]} - ${arr[19]}\n${arr[20]} - ${arr[21]}`)
         embed.addFields(
           { 
             name: "Favourite Loadout",
