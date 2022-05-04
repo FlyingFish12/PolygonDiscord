@@ -50,7 +50,7 @@ module.exports = {
           .split("\n")
           .map((str) => str.trim())
 
-        embed.setDescription(`${arr[0]} - ${arr[1]}\n${arr[2]} - ${arr[3]}\n${arr[4]} - ${arr[5]}\n${arr[6]} - ${arr[7]}\n${arr[8]} - ${arr[9]}\n${arr[10]} - ${arr[11]}\n${arr[12]} - ${arr[13]}\n${arr[14]} - ${arr[15]}\n${arr[16]} - ${arr[17]}\n${arr[18]} - ${arr[19]}\n${arr[20]} - ${arr[21]}`)
+        embed.setDescription(`${arr[0]} - ${arr[1]}\n${arr[2]} - ${arr[3]}\n${arr[4]} - ${arr[5]}\n${arr[6]} - ${arr[7]}\n${arr[8]} - ${arr[9]}\n${arr[10]} - ${arr[11]}\n${arr[12]} - ${arr[13]}\n${arr[14]} - ${arr[15]}\n${arr[16]} - ${arr[17]}\n${arr[18]} - ${arr[19]}\n${arr[20]} - ${arr[21]}\n${arr[22]} - ${arr[23]}\n${arr[24]} - ${arr[25]}\n${arr[26]} - ${arr[27]}`)
         embed.addFields(
           { 
             name: "Clan's Favourite Loadout",
