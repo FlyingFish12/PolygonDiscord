@@ -70,7 +70,7 @@ module.exports = {
             return elems
           }
 
-        embed.setDescription(description())
+        embed.setDescription(description)
         embed.addFields(
           { 
             name: "Favourite Loadout",

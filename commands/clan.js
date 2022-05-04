@@ -57,7 +57,7 @@ module.exports = {
             return elems
           }
 
-        embed.setDescription(description())
+        embed.setDescription(description)
         embed.addFields(
           { 
             name: "Clan's Favourite Loadout",
