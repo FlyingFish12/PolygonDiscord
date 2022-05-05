@@ -55,9 +55,9 @@ module.exports = {
           { 
             name: "Clan's Favourite Loadout",
             value: 
-            `Favorite gun is the ${favArr[0]} with ${favArr[1]} kills\n` + 
-            `Favorite perk is ${favArr[2]} (used ${favArr[3]} times).\n` +
-            `Favorite ability is ${favArr[4]} (used ${favArr[5]} times).`,
+            `Favorite gun is the ${favArr[0]} with ${favArr[1]}\n` + 
+            `Favorite perk is ${favArr[2]} (used ${favArr[3]}).\n` +
+            `Favorite ability is ${favArr[4]} (used ${favArr[5]}).`,
             inline: false
           },
         );
