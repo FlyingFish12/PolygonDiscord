@@ -90,6 +90,7 @@ module.exports = {
           }
         );
         embed.setTitle(`${title.rawText.replace("Stats", "").trim()}`);
+        embed.setURL(`https://stats.gats.io/${interaction.options.getString("username")}`);
         embed.setThumbnail("https://stats.gats.io" + img);
         embed.setColor("RANDOM");
         interaction.reply({ embeds: [embed] });
