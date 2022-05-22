@@ -60,9 +60,13 @@ module.exports = {
             `Favorite ability is ${favArr[4]} (used ${favArr[5]}).`,
             inline: false
           },
+          {
+            name: `** **`,
+            value: `[View these stats online](https://stats.gats.io/clan/${interaction.options.getString("clan-name")})`,
+            inline: false
+          }
         );
         embed.setTitle(title.rawText.replace("Clan Summary", "").trim());
-        embed.setURL(`https://stats.gats.io/clan/${interaction.options.getString("clan-name")}`);
         embed.setThumbnail("https://stats.gats.io" + img);
         embed.setColor("RANDOM");
         interaction.reply({ embeds: [embed] });
