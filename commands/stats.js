@@ -24,6 +24,7 @@ module.exports = {
     let img;
     let dname;
     let rank;
+    let clanname;
     let mention = (id) => {
       if (id == null) {
         return null;
@@ -51,7 +52,7 @@ module.exports = {
         img = root.querySelector("td img").getAttribute("src");
         favArr = favTable.structuredText.split("\n").map((str) => str.trim());
       }
-      let clanname = root.querySelector("h2").childNodes[1]
+      clanname = root.querySelector("h2").childNodes[1]
       if (!clanname) {
         clanname = 'No clan'
       } else {
@@ -68,7 +69,7 @@ module.exports = {
           { 
             name: "Favourite Loadout",
             value: 
-            `Favorite gun is the ${favArr[0]} with ${favArr[1]}\n` + 
+            `Favorite gun is ${favArr[0]} with ${favArr[1]}\n` + 
             `Favorite perk is ${favArr[2]} (used ${favArr[3]}).\n` +
             `Favorite ability is ${favArr[4]} (used ${favArr[5]}).`,
             inline: false
