@@ -52,13 +52,7 @@ module.exports = {
         img = root.querySelector("td img").getAttribute("src");
         favArr = favTable.structuredText.split("\n").map((str) => str.trim());
       }
-      clanname = root.querySelector("h2").childNodes[1]
-      if (!clanname) {
-        clanname = 'No clan'
-      } else {
-        nearlyclanname = root.querySelector("h2").childNodes[1].rawText.replace(/\n+/g, '')
-        clanname = `[${nearlyclanname}](https://stats.gats.io/clan/${nearlyclanname})`
-      }
+      
       if (table) {
         let arr = table.structuredText
           .split("\n")
@@ -73,11 +67,6 @@ module.exports = {
             `Favorite perk is ${favArr[2]} (used ${favArr[3]}).\n` +
             `Favorite ability is ${favArr[4]} (used ${favArr[5]}).`,
             inline: false
-          },
-          { 
-            name: `Clan member`,
-            value: `${clanname}`,
-            inline: true
           },
           {
             name: `Gats Rank`,
